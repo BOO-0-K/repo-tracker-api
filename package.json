@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "start:prod": "node dist/server.js",
     "build": "tsc",
@@ -13,6 +16,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@vercel/node": "^3.2.24",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",

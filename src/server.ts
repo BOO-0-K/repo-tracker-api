@@ -2,10 +2,9 @@ import "dotenv/config";
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { Octokit } from "octokit";
+import { VercelRequest, VercelResponse } from "@vercel/node";
 
 const app = express();
-
-const port = process.env.PORT || 5000;
 
 const octokit = new Octokit({
     auth: process.env.OCTOKIT_TOKEN
@@ -51,6 +50,6 @@ app.get("/api/commits/:repo", async (req: Request, res: Response) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`🚀 Server is running on ${port} port.`);
-});
+export default (req: VercelRequest, res: VercelResponse) => {
+    app(req, res);
+};
