@@ -21,7 +21,7 @@ app.use(express.json());
 // @route GET /api/repos
 app.get("/api/repos", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield octokit.request(`GET /users/${process.env.GITHUB_USERNAME}/repos`);
+        const response = yield octokit.request(`GET /users/${process.env.GITHUB_USERNAME}/repos?per_page=100`);
         res.status(200).json(response.data);
     }
     catch (error) {
@@ -45,7 +45,7 @@ app.get("/api/repo/:repo", (req, res) => __awaiter(void 0, void 0, void 0, funct
 app.get("/api/commits/:repo", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { repo } = req.params;
     try {
-        const response = yield octokit.request(`GET /repos/${process.env.GITHUB_USERNAME}/${repo}/commits`);
+        const response = yield octokit.request(`GET /repos/${process.env.GITHUB_USERNAME}/${repo}/commits?per_page=100`);
         res.status(200).json(response.data);
     }
     catch (error) {
