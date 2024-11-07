@@ -17,7 +17,7 @@ app.use(express.json());
 // @route GET /api/repos
 app.get("/api/repos", async (req: Request, res: Response) => {
     try {
-        const response = await octokit.request(`GET /users/${process.env.GITHUB_USERNAME}/repos`);
+        const response = await octokit.request(`GET /users/${process.env.GITHUB_USERNAME}/repos?per_page=100`);
         res.status(200).json(response.data);
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error." });
@@ -43,7 +43,7 @@ app.get("/api/commits/:repo", async (req: Request, res: Response) => {
     const { repo } = req.params;
 
     try {
-        const response = await octokit.request(`GET /repos/${process.env.GITHUB_USERNAME}/${repo}/commits`);
+        const response = await octokit.request(`GET /repos/${process.env.GITHUB_USERNAME}/${repo}/commits?per_page=100`);
         res.status(200).json(response.data);
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error." });
