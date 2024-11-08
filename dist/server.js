@@ -52,6 +52,27 @@ app.get("/api/commits/:repo", (req, res) => __awaiter(void 0, void 0, void 0, fu
         res.status(500).json({ error: "Internal Server Error." });
     }
 }));
+// @desc Get all Commits
+// @route Get /api/commits
+app.get("/api/commits", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        const todayStr = today.toISOString().split("T")[0];
+        const todayUTC = `${todayStr}T15:00:00Z`;
+        const response = yield octokit.request(`GET /search/commits`, {
+            q: `committer:${process.env.GITHUB_USERNAME} committer-date:>=${todayUTC}`,
+            sort: 'committer-date',
+            order: 'asc',
+            per_page: 100
+        });
+        console.log(response.data);
+        res.status(200).json(response.data);
+    }
+    catch (error) {
+        res.status(500).json({ error: "Internal Server Error." });
+    }
+}));
 export default (req, res) => {
     app(req, res);
 };
